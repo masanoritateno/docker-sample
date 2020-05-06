@@ -43,6 +43,7 @@ docker-compose exec node npm run dev
 
 データベース
 ```
+php artisan migrate
 // DBを全削除して作り直す
 php artisan migrate:refresh
 // seederのデータをDBに格納
