@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Student;
 use Illuminate\Http\Request;
 
 class StudentController extends Controller
@@ -15,9 +16,12 @@ class StudentController extends Controller
     {
 
         echo 'controllerのindexだよ';
-        //
 
-        return view('student.index');
+        $students = Student::query()->paginate(5);
+
+        return view('student.index',[
+            'students'=> $students,
+        ]);
 
     }
 
