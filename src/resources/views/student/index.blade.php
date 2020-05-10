@@ -5,6 +5,7 @@
 
 @section('content')
     <p>ここが本文のコンテンツ</p>
+    <a href="{{ route('student.create') }}">生徒新規追加</a>
 
     <p>bladeの中身だよ</p>
     <p>このページには{{ $students->count() }}件表示中</p>

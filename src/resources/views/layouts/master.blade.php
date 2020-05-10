@@ -8,6 +8,10 @@
 <body>
 
 
+@component('layouts.alert')
+
+@endcomponent
+
 @component('layouts.header')
     @slot('selectItem', 'student')
 
@@ -15,7 +19,7 @@
 
 
 
-<main>
+<main style="margin-left: 50px;">
     <p>ここはマスターレイアウト</p>
 
     @yield('content')
