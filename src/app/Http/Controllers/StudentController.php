@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Student;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Validator;
 
 class StudentController extends Controller
 {
@@ -48,13 +49,41 @@ class StudentController extends Controller
     {
         Log::debug('StudentController@store');
 
-        $student = new Student();
-        $student->name = $request->get('name');
-        $student->age = $request->get('age');
-        $student->save();
-//        return redirect()->route('student.index');
-        return redirect()->route('student.index')->with('success', $student->name . 'を追加しました。');
-//        return redirect()->route('student.index')->with('successes', ['生徒を追加しました。']);
+        $validationRules = [
+            'name' => 'required|string|max:10',
+            'age' => 'required|integer|digits_between:1,3',
+        ];
+        $validationMessages = [
+            'name.required' => '名前を入力してください',
+            'name.max' => '名前は10文字以下で入力してください',
+            'age.*' => '年齢は3桁以内で必ず入力してください。',
+        ];
+
+        // バリデーション
+//        $request->validate($validationRules, $validationMessages);
+
+        $validator = Validator::make($request->all(), $validationRules, $validationMessages);
+        if (!$validator->passes()) {
+            return back()
+                ->withErrors($validator)
+                ->withInput();
+        }
+
+        try{
+            $student = new Student();
+            $student->name = $request->get('name');
+            $student->age = $request->get('age');
+            $student->save();
+
+            Log::info('student created user id :'.$student->id);
+            return redirect()->route('student.index')->with('success', $student->name . 'を追加しました。');
+
+        }catch (\Exception $exception){
+            Log::error($exception->getMessage());
+            return back()
+                ->withErrors(['システムエラー。'])
+                ->withInput();
+        }
     }
 
     /**
@@ -66,6 +95,8 @@ class StudentController extends Controller
     public function show($id)
     {
         //
+//        return view('student.show');
+
     }
 
     /**
