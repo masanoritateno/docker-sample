@@ -21,6 +21,7 @@ class CreateStudentsTable extends Migration
 
 
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

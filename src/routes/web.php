@@ -20,10 +20,7 @@
 //Route::get('/student/{id}/edit', 'StudentController@edit')->name('student.edit');
 //Route::delete('/student/{id}', 'StudentController@destory')->name('student.destory');
 
-
 Route::resource('/student', 'StudentController');
-
-
 
 
 Route::get('/', function () {

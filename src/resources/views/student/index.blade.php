@@ -17,6 +17,8 @@
             <th bgcolor="#EE0000" width="200">年齢</th>
             <th bgcolor="#EE0000" width="200">作成日</th>
             <th bgcolor="#EE0000" width="200">更新日</th>
+            <th bgcolor="#EE0000" width="200">削除日</th>
+            <th bgcolor="#EE0000" width="200">削除</th>
         </tr>
 
         @foreach($students AS $student)
@@ -26,6 +28,15 @@
                 <td>{{ $student->age }}</td>
                 <td>{{ $student->created_at }}</td>
                 <td>{{ $student->updated_at }}</td>
+                <td>{{ $student->deleted_at }}</td>
+                <td>
+                    <form method="post" action="{{ route('student.destroy',$student->id) }}">
+                        @method('DELETE')
+                        @csrf
+                        <button type="submit" class="btn btn-danger">削除</button>
+                    </form>
+                </td>
+
             </tr>
         @endforeach
         {{ $students->links() }}
